@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política Pública de Participación Ciudadana - Pereira</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: white;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .presentation-container {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100vh;
+            display: none;
+            flex-direction: column; /* Sigue siendo columna */
+            justify-content: flex-start;
+            align-items: center;
+            padding: 1rem;
+            background: white;
+            animation: slideIn 0.8s ease-in-out;
+            position: relative;
+            overflow-y: auto; /* PERMITE SCROLL SI EL CONTENIDO ES LARGO */
+            padding-bottom: 80px; /* Espacio para la navegación inferior */
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .slide-header {
+            text-align: center;
+            margin: 1rem 0 2rem 0;
+            width: 100%;
+            padding-top: 120px;
+        }
+
+        .slide-title {
+            font-size: 2.2rem;
+            color: #DC2626;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .slide-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: #FCD34D;
+            border-radius: 2px;
+        }
+
+        .slide-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .logo-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            z-index: 100;
+            background: rgba(255,255,255,0.9);
+            padding: 10px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            height: 60px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+            background: rgba(0,0,0,0.1);
+            padding: 15px 25px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(220, 38, 38, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: #DC2626;
+            transform: scale(1.3);
+        }
+
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #DC2626;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .nav-arrow:hover {
+            background: #B91C1C;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .nav-arrow.prev {
+            left: 30px;
+        }
+
+        .nav-arrow.next {
+            right: 30px;
+        }
+
+        .content-grid {
+            display: grid;
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: 2rem; /* Espacio al final del grid */
+        }
+
+        .two-columns {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .three-columns {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .four-columns {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .card {
+            background: white;
+            border: 3px solid #DC2626;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: #FCD34D;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(220, 38, 38, 0.1);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .card-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #DC2626;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-label {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .stats-highlight {
+            background: #FCD34D;
+            color: #000;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: inline-block;
+            margin: 0.5rem;
+        }
+
+        /* PROBLEMAS ESPECÍFICOS: Ajustes para las problem-box como tarjetas */
+        .problem-box {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            border-left: 5px solid;
+            margin: 0; /* Eliminar márgenes verticales aquí, se maneja con gap en el grid */
+        }
+
+        /* COLORES DE LOS BORDES DE PROBLEM-BOX */
+        .content-grid.three-columns > div:nth-child(1) .problem-box { border-color: #DC2626; } /* Rojo para Estado -> Ciudadanía */
+        .content-grid.three-columns > div:nth-child(2) .problem-box { border-color: #FCD34D; } /* Amarillo para Ciudadanía -> Estado */
+        .content-grid.three-columns > div:nth-child(3) .problem-box { border-color: #059669; } /* Verde para Ciudadanía <-> Ciudadanía */
+
+
+        .problem-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .problem-percentage {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.07);
+            color: #555;
+            padding: 0.3rem 0.6rem;
+            border-radius: 7px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .problem-title {
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            padding-right: 0;
+            font-size: 1.3rem;
+        }
+
+        .problem-description {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .constitution-ref {
+            background: rgba(252, 211, 77, 0.1);
+            border: 2px solid #FCD34D;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #333;
+        }
+
+        .highlight-text {
+            color: #DC2626;
+            font-weight: 600;
+        }
+
+        .slide-counter {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(220, 38, 38, 0.1);
+            color: #DC2626;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+        }
+
+        .chart-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        .chart-bar {
+            display: flex;
+            align-items: center;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .chart-label {
+            width: 200px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .chart-bar-fill {
+            height: 25px;
+            background: linear-gradient(90deg, #DC2626, #FCD34D);
+            border-radius: 12px;
+            margin: 0 15px;
+            position: relative;
+            animation: fillBar 2s ease-in-out;
+        }
+
+        @keyframes fillBar {
+            from { width: 0; }
+        }
+
+        .chart-percentage {
+            font-weight: 700;
+            color: #DC2626;
+            min-width: 50px;
+        }
+
+        /* Ajustes CRÍTICOS para el triángulo en Slide 5 para evitar superposición */
+        .triangle-schema {
+            /* No display: flex; aquí, para que los elementos fluyan normalmente */
+            width: 100%;
+            max-width: 650px; /* Aumentado ligeramente para dar más espacio */
+            height: 400px; /* Altura del contenedor del triángulo */
+            margin: 2rem auto 3rem auto; /* Márgenes para separar del header y el content-grid */
+            position: relative; /* Esencial para el posicionamiento absoluto de sus hijos */
+            animation: fadeIn 1s ease-in-out;
+            /* Estos estilos inline se eliminarán del HTML y se moverán aquí si es necesario */
+        }
+
+        .triangle-node {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-width: 130px;
+            position: absolute; /* Debe ser absoluto para formar el triángulo */
+        }
+        .triangle-node div:first-child {
+            font-size: 2rem; /* Icono un poco más pequeño */
+            margin-bottom: 0.5rem;
+        }
+        .triangle-node div:last-child {
+            font-size: 1.1rem; /* Texto un poco más pequeño */
+        }
+
+        /* Posicionamiento específico de los nodos */
+        .estado-node {
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #DC2626;
+            color: white;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+        }
+
+        .ciudadania-node-1 {
+            bottom: 0;
+            left: 0;
+            background: #FCD34D;
+            color: #000;
+            box-shadow: 0 4px 15px rgba(252, 211, 77, 0.3);
+        }
+
+        .ciudadania-node-2 {
+            bottom: 0;
+            right: 0;
+            background: #FCD34D;
+            color: #000;
+            box-shadow: 0 4px 15px rgba(252, 211, 77, 0.3);
+        }
+
+        .triangle-arrow {
+            animation: drawLine 2s ease-in-out;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1; /* Debajo de las etiquetas y nodos */
+            position: absolute; /* Necesario para que las flechas se posicionen */
+        }
+
+        .arrow-label {
+            animation: fadeIn 2.5s ease-in-out;
+            transition: all 0.3s ease;
+            z-index: 10; /* Sobre las flechas y nodos */
+            padding: 0.4rem 1rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            white-space: nowrap;
+            position: absolute; /* Necesario para que las etiquetas se posicionen */
+        }
+
+        .arrow-label:hover {
+            transform: scale(1.1);
+        }
+
+        /* Posicionamiento específico de las flechas y sus etiquetas */
+        /* Estado -> Ciudadanía (Izquierda) */
+        .triangle-schema .triangle-arrow:nth-of-type(1) { /* Esto es más específico */
+            top: 120px; /* Ajustado */
+            left: calc(50% - 160px); /* Ajustado */
+            width: 2px;
+            height: 120px; /* Ajustado */
+            background: #DC2626;
+            transform: rotate(-65deg); /* Más inclinado */
+            transform-origin: top;
+        }
+        .triangle-schema .arrow-label:nth-of-type(1) {
+            top: 125px; /* Ajustado */
+            left: calc(50% - 280px); /* Ajustado */
+            background: rgba(220, 38, 38, 0.9);
+            color: white;
+        }
+        
+        /* Ciudadanía -> Estado (Derecha) */
+        .triangle-schema .triangle-arrow:nth-of-type(2) {
+            top: 120px; /* Ajustado */
+            right: calc(50% - 160px); /* Ajustado */
+            width: 2px;
+            height: 120px; /* Ajustado */
+            background: #FCD34D;
+            transform: rotate(65deg); /* Más inclinado */
+            transform-origin: top;
+        }
+        .triangle-schema .arrow-label:nth-of-type(2) {
+            top: 125px; /* Ajustado */
+            right: calc(50% - 280px); /* Ajustado */
+            background: rgba(252, 211, 77, 0.9);
+            color: #000;
+        }
+        
+        /* Ciudadanía ↔ Ciudadanía (Base) */
+        .triangle-schema .triangle-arrow:nth-of-type(3) {
+            bottom: 50px; /* Ajustado */
+            left: calc(50% - 220px); /* Ajustado */
+            width: 440px; /* Ajustado */
+            height: 2px;
+            background: #059669;
+        }
+        .triangle-schema .arrow-label:nth-of-type(3) {
+            bottom: 60px; /* Ajustado */
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(5, 150, 105, 0.9);
+            color: white;
+        }
+
+        .conclusion-box {
+            background: #DC2626;
+            color: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 800px;
+            margin: 2rem auto;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.3);
+        }
+
+        .process-timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 900px;
+            margin: 2rem auto;
+        }
+
+        .timeline-item {
+            text-align: center;
+            flex: 1;
+            position: relative;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            top: 30px;
+            right: -50%;
+            width: 100%;
+            height: 3px;
+            background: #FCD34D;
+            z-index: -1;
+        }
+
+        .timeline-item:last-child::after {
+            display: none;
+        }
+
+        .timeline-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #DC2626;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 1rem;
+        }
+
+        .timeline-label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        @media (max-width: 1024px) {
+            .slide {
+                padding: 1rem; /* Reducir padding general de la slide */
+            }
+            .slide-title {
+                font-size: 2rem;
+            }
+            .slide-subtitle {
+                font-size: 1.1rem;
+            }
+            .content-grid.three-columns {
+                grid-template-columns: repeat(2, 1fr); /* Dos columnas en pantallas medianas */
+            }
+            .triangle-schema {
+                max-width: 500px; /* Reducir tamaño del triángulo */
+                height: 350px;
+                margin: 2rem auto 3rem auto; /* Ajustar margen */
+            }
+            /* Posiciones de los elementos del triángulo en 1024px */
+            .triangle-arrow:nth-of-type(1) { /* Flecha Estado -> Ciudadanía */
+                top: 90px !important;
+                left: calc(50% - 130px) !important;
+                height: 100px !important;
+            }
+            .arrow-label:nth-of-type(1) { /* Etiqueta Estado -> Ciudadanía */
+                top: 95px !important;
+                left: calc(50% - 200px) !important;
+            }
+            .triangle-arrow:nth-of-type(2) { /* Flecha Ciudadanía -> Estado */
+                top: 90px !important;
+                right: calc(50% - 130px) !important;
+                height: 100px !important;
+            }
+            .arrow-label:nth-of-type(2) { /* Etiqueta Ciudadanía -> Estado */
+                top: 95px !important;
+                right: calc(50% - 200px) !important;
+            }
+            .triangle-arrow:nth-of-type(3) { /* Flecha Ciudadanía <-> Ciudadanía */
+                bottom: 40px !important;
+                left: calc(50% - 180px) !important;
+                width: 360px !important;
+            }
+            .arrow-label:nth-of-type(3) { /* Etiqueta Ciudadanía <-> Ciudadanía */
+                bottom: 50px !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .slide-title {
+                font-size: 1.8rem;
+            }
+            .slide-subtitle {
+                font-size: 1rem;
+            }
+            .content-grid.two-columns,
+            .content-grid.three-columns,
+            .content-grid.four-columns {
+                grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+            }
+            
+            .logo-container {
+                top: 15px;
+                left: 15px;
+                padding: 8px 12px;
+                gap: 15px;
+            }
+            
+            .logo {
+                height: 50px !important;
+            }
+            
+            .slide-header {
+                padding-top: 90px;
+            }
+            
+            .nav-arrow {
+                display: none;
+            }
+            
+            .process-timeline {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .timeline-item::after {
+                display: none;
+            }
+
+            /* Triangle schema responsiveness for very small screens */
+            .triangle-schema {
+                max-width: 300px; /* Más pequeño para móviles */
+                height: 250px; /* Menor altura */
+                margin: 1.5rem auto 2rem auto; /* Ajustar márgenes */
+            }
+            .triangle-node {
+                padding: 0.6rem 1rem;
+                min-width: 80px;
+            }
+            .triangle-node div:first-child {
+                font-size: 1.5rem; /* Icono más pequeño aún */
+            }
+            .triangle-node div:last-child {
+                font-size: 0.8rem; /* Texto más pequeño aún */
+            }
+            .arrow-label {
+                font-size: 0.6rem;
+                padding: 0.2rem 0.3rem;
+                border-radius: 6px;
+            }
+            .triangle-arrow:nth-of-type(1) { /* Flecha Estado -> Ciudadanía */
+                top: 70px !important;
+                left: calc(50% - 90px) !important;
+                height: 70px !important;
+            }
+            .arrow-label:nth-of-type(1) { /* Etiqueta Estado -> Ciudadanía */
+                top: 75px !important;
+                left: calc(50% - 140px) !important;
+            }
+            .triangle-arrow:nth-of-type(2) { /* Flecha Ciudadanía -> Estado */
+                top: 70px !important;
+                right: calc(50% - 90px) !important;
+                height: 70px !important;
+            }
+            .arrow-label:nth-of-type(2) { /* Etiqueta Ciudadanía -> Estado */
+                top: 75px !important;
+                right: calc(50% - 140px) !important;
+            }
+            .triangle-arrow:nth-of-type(3) { /* Flecha Ciudadanía <-> Ciudadanía */
+                bottom: 30px !important;
+                left: calc(50% - 110px) !important;
+                width: 220px !important;
+            }
+            .arrow-label:nth-of-type(3) { /* Etiqueta Ciudadanía <-> Ciudadanía */
+                bottom: 40px !important;
+                font-size: 0.6rem;
+            }
+
+            .problem-box {
+                padding: 0.8rem;
+                min-height: auto;
+            }
+            .problem-title {
+                font-size: 1rem;
+            }
+            .problem-description {
+                font-size: 0.85rem;
+            }
+            .problem-percentage {
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="slide active">
+            <div class="logo-container">
+                <img src="logo_alcaldia_pereira.png" alt="Alcaldía de Pereira" class="logo">
+                <img src="logo_pereira_participa.png" alt="Pereira Participa" class="logo">
+            </div>
+            <div class="slide-counter">1 / 7</div>
+            
+            <div class="slide-header">
+                <h1 class="slide-title">Política Pública de Participación Ciudadana</h1>
+                <p class="slide-subtitle">Pereira - Risaralda | Fortalecimiento Democrático 2025</p>
+            </div>
+            
+            <div class="constitution-ref">
+                <strong>Fundamento Constitucional:</strong> La participación ciudadana es un derecho fundamental consagrado en la Constitución Política de Colombia (Art. 2° y 40), que busca fortalecer la democracia participativa y garantizar la incidencia real de la ciudadanía en las decisiones públicas.
+            </div>
+            
+            <div class="content-grid three-columns">
+                <div class="card">
+                    <div class="card-icon">▸</div>
+                    <h3 class="highlight-text">Democracia Participativa</h3>
+                    <p>Complemento esencial a la democracia representativa</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">●</div>
+                    <h3 class="highlight-text">Nuevos Liderazgos</h3>
+                    <p>Formación y reconocimiento de líderes sociales</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">▲</div>
+                    <h3 class="highlight-text">Marco Legal</h3>
+                    <p>Ley Estatutaria de Participación Ciudadana</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="logo-container">
+                <img src="logo_alcaldia_pereira.png" alt="Alcaldía de Pereira" class="logo">
+                <img src="logo_pereira_participa.png" alt="Pereira Participa" class="logo">
+            </div>
+            <div class="slide-counter">2 / 7</div>
+            
+            <div class="slide-header">
+                <h1 class="slide-title">¿Por qué una Política Pública de Participación?</h1>
+                <p class="slide-subtitle">Fortalecimiento de la Democracia Local</p>
+            </div>
+            
+            <div class="content-grid two-columns">
+                <div>
+                    <h3 style="color: #DC2626; margin-bottom: 1.5rem;">♦ Objetivos Estratégicos</h3>
+                    <div class="problem-box">
+                        <h4 class="problem-title">Complementar la Democracia</h4>
+                        <p class="problem-description">Ir más allá del voto para garantizar participación continua y efectiva en la gestión pública</p>
+                    </div>
+                    <div class="problem-box">
+                        <h4 class="problem-title">Formar Nuevos Liderazgos</h4>
+                        <p class="problem-description">Identificar, capacitar y empoderar líderes sociales y comunitarios emergentes</p>
+                    </div>
+                    <div class="problem-box">
+                        <h4 class="problem-title">Garantizar Incidencia Real</h4>
+                        <p class="problem-description">Asegurar que la participación ciudadana tenga impacto tangible en las decisiones públicas</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 style="color: #DC2626; margin-bottom: 1.5rem;">📜 Marco Normativo</h3>
+                    <div class="constitution-ref">
+                        <strong>Constitución Política - Art. 2°:</strong><br>
+                        "Son fines esenciales del Estado... facilitar la participación de todos en las decisiones que los afectan"
+                    </div>
+                    <div class="constitution-ref">
+                        <strong>Constitución Política - Art. 40:</strong><br>
+                        "Todo ciudadano tiene derecho a participar en la conformación, ejercicio y control del poder político"
+                    </div>
+                    <div class="constitution-ref">
+                        <strong>Ley Estatutaria 1757 de 2015:</strong><br>
+                        Regula el derecho fundamental a la participación democrática
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="logo-container">
+                <img src="logo_alcaldia_pereira.png" alt="Alcaldía de Pereira" class="logo">
+                <img src="logo_pereira_participa.png" alt="Pereira Participa" class="logo">
+            </div>
+            <div class="slide-counter">3 / 7</div>
+            
+            <div class="slide-header">
+                <h1 class="slide-title">Proceso de Co-creación</h1>
+                <p class="slide-subtitle">Construcción Participativa de la Política Pública</p>
+            </div>
+            
+            <div class="content-grid four-columns" style="margin-bottom: 2rem;">
+                <div class="card">
+                    <div class="card-number">1,678</div>
+                    <div class="card-label">Personas Participantes</div>
+                </div>
+                <div class="card">
+                    <div class="card-number">606</div>
+                    <div class="card-label">Talleres Realizados</div>
+                </div>
+                <div class="card">
+                    <div class="card-number">1,035</div>
+                    <div class="card-label">Participación Digital</div>
+                </div>
+                <div class="card">
+                    <div class="card-number">60</div>
+                    <div class="card-label">Espacios Totales</div>
+                </div>
+            </div>
+            
+            <div class="process-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-icon">◆</div>
+                    <div class="timeline-label">15 Reuniones Internas</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon">●</div>
+                    <div class="timeline-label">4 Reuniones Ampliadas</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon">▲</div>
+                    <div class="timeline-label">16 Entrevistas</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon">♦</div>
+                    <div class="timeline-label">6 Instrumentos Digitales</div>
+                </div>
+            </div>
+            
+            <div class="stats-highlight">Banner web • Instagram • Facebook • Medios locales • Concejo Municipal</div>
+        </div>
+
+        <div class="slide">
+            <div class="logo-container">
+                <img src="logo_alcaldia_pereira.png" alt="Alcaldía de Pereira" class="logo">
+                <img src="logo_pereira_participa.png" alt="Pereira Participa" class="logo">
+            </div>
+            <div class="slide-counter">4 / 7</div>
+            
+            <div class="slide-header">
+                <h1 class="slide-title">¿Por qué Participa la Gente?</h1>
+                <p class="slide-subtitle">Motivaciones y Sectores Participantes</p>
+            </div>
+            
+            <div class="content-grid two-columns">
+                <div>
+                    <h3 style="color: #DC2626; margin-bottom: 1.5rem;">■ Principales Motivaciones</h3>
+                    <div class="chart-container">
+                        <div class="chart-bar">
+                            <div class="chart-label">Expresar opinión</div>
+                            <div class="chart-bar-fill" style="width: 85%;"></div>
+                            <div class="chart-percentage">85%</div>
+                        </div>
+                        <div class="chart-bar">
+                            <div class="chart-label">Proponer soluciones</div>
+                            <div class="chart-bar-fill" style="width: 70%;"></div>
+                            <div class="chart-percentage">70%</div>
+                        </div>
+                        <div class="chart-bar">
+                            <div class="chart-label">Tomar decisiones</div>
+                            <div class="chart-bar-fill" style="width: 62%;"></div>
+                            <div class="chart-percentage">62%</div>
+                        </div>
+                        <div class="chart-bar">
+                            <div class="chart-label">Defender derechos</div>
+                            <div class="chart-bar-fill" style="width: 58%;"></div>
+                            <div class="chart-percentage">58%</div>
+                        </div>
+                        <div class="chart-bar">
+                            <div class="chart-label">Vigilar instituciones</div>
+                            <div class="chart-bar-fill" style="width: 55%;"></div>
+                            <div class="chart-percentage">55%</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 style="color: #DC2626; margin-bottom: 1.5rem;">● Sectores Participantes</h3>
+                    <div class="content-grid" style="grid-template-columns: repeat(3, 1fr); gap: 0.8rem;">
+                        <div class="stats-highlight">Líderes Comunitarios</div>
+                        <div class="stats-highlight">Juntas de Acción Comunal</div>
+                        <div class="stats-highlight">Organizaciones Sociales</div>
+                        <div class="stats-highlight">Juventudes</div>
+                        <div class="stats-highlight">Mujeres Lideresas</div>
+                        <div class="stats-highlight">Adultos Mayores</div>
+                        <div class="stats-highlight">Población Rural</div>
+                        <div class="stats-highlight">Sector Educativo</div>
+                        <div class="stats-highlight">Universidades</div>
+                        <div class="stats-highlight">Población Étnica</div>
+                        <div class="stats-highlight">Personas con Discapacidad</div>
+                        <div class="stats-highlight">Población LGBTI+</div>
+                        <div class="stats-highlight">Víctimas del Conflicto</div>
+                        <div class="stats-highlight">Asociaciones de Barrios</div>
+                        <div class="stats-highlight">Cooperativas</div>
+                        <div class="stats-highlight">Empresarios</div>
+                        <div class="stats-highlight">Comerciantes</div>
+                        <div class="stats-highlight">Transportadores</div>
+                        <div class="stats-highlight">Organizaciones Deportivas</div>
+                        <div class="stats-highlight">Grupos Culturales</div>
+                        <div class="stats-highlight">Organizaciones Ambientales</div>
+                        <div class="stats-highlight">Trabajadores Informales</div>
+                        <div class="stats-highlight">Migrantes</div>
+                        <div class="stats-highlight">Organizaciones de Fe</div>
+                        <div class="stats-highlight">Madres Comunitarias</div>
+                        <div class="stats-highlight">Vendedores Ambulantes</div>
+                        <div class="stats-highlight">Asociaciones de Padres</div>
+                        <div class="stats-highlight">Veeedurías Ciudadanas</div>
+                        <div class="stats-highlight">Mesa de Víctimas</div>
+                        <div class="stats-highlight">Población Afrodescendiente</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="logo-container">
+                <img src="logo_alcaldia_pereira.png" alt="Alcaldía de Pereira" class="logo">
+                <img src="logo_pereira_participa.png" alt="Pereira Participa" class="logo">
+            </div>
+            <div class="slide-counter">5 / 7</div>
+            
+            <div class="slide-header">
+                <h1 class="slide-title">Problemáticas Identificadas</h1>
+                <p class="slide-subtitle">Relaciones Estado-Ciudadanía | Ciudadanía-Estado | Ciudadanía-Ciudadanía</p>
+            </div>
+            
+            <div class="triangle-schema">
+                <div class="triangle-node estado-node">
+                    <div>🏛️</div>
+                    <div>ESTADO</div>
+                </div>
+                
+                <div class="triangle-node ciudadania-node-1">
+                    <div>👥</div>
+                    <div>CIUDADANÍA</div>
+                </div>
+                
+                <div class="triangle-node ciudadania-node-2">
+                    <div>👥</div>
+                    <div>CIUDADANÍA</div>
+                </div>
+                
+                <div class="triangle-arrow"></div>
+                <div class="arrow-label" style="background: rgba(220, 38, 38, 0.9); color: white;">Estado → Ciudadanía</div>
+                
+                <div class="triangle-arrow"></div>
+                <div class="arrow-label" style="background: rgba(252, 211, 77, 0.9); color: #000;">Ciudadanía → Estado</div>
+                
+                <div class="triangle-arrow"></div>
+                <div class="arrow-label" style="background: rgba(5, 150, 105, 0.9); color: white;">Ciudadanía ↔ Ciudadanía</div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="logo-container">
+                <img src="logo_alcaldia_pereira.png" alt="Alcaldía de Pereira" class="logo">
+                <img src="logo_pereira_participa.png" alt="Pereira Participa" class="logo">
+            </div>
+            <div class="slide-counter">6 / 7</div>
+            
+            <div class="slide-header">
+                <h1 class="slide-title">Problemáticas Identificadas</h1>
+                <p class="slide-subtitle">Relaciones Estado-Ciudadanía | Ciudadanía-Estado | Ciudadanía-Ciudadanía</p>
+            </div>
+            
+            <div class="content-grid three-columns">
+                <div>
+                    <div class="problem-box">
+                        <div class="problem-percentage">34%</div>
+                        <h4 class="problem-title">Incumplimiento de promesas</h4>
+                        <p class="problem-description">Crisis de confianza institucional</p>
+                    </div>
+                    <div class="problem-box">
+                        <div class="problem-percentage">32%</div>
+                        <h4 class="problem-title">Miedo a represalias</h4>
+                        <p class="problem-description">Falta de protección a participantes</p>
+                    </div>
+                    <div class="problem-box">
+                        <div class="problem-percentage">30%</div>
+                        <h4 class="problem-title">Exclusión territorial</h4>
+                        <p class="problem-description">Barreras geográficas y económicas</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="problem-box">
+                        <div class="problem-percentage">38%</div>
+                        <h4 class="problem-title">Fatiga participativa</h4>
+                        <p class="problem-description">Reuniones sin resultados tangibles</p>
+                    </div>
+                    <div class="problem-box">
+                        <div class="problem-percentage">29%</div>
+                        <h4 class="problem-title">Falta de información</h4>
+                        <p class="problem-description">Canales inadecuados de comunicación</p>
+                    </div>
+                    <div class="problem-box">
+                        <div class="problem-percentage">25%</div>
+                        <h4 class="problem-title">Desconoce sus derechos</h4>
+                        <p class="problem-description">Falta de educación participativa</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="problem-box">
+                        <div class="problem-percentage">23%</div>
+                        <h4 class="problem-title">Discontinuidad</h4>
+                        <p class="problem-description">Cambios de administración</p>
+                    </div>
+                    <div class="problem-box">
+                        <div class="problem-percentage">20%</div>
+                        <h4 class="problem-title">Participación clientelista</h4>
+                        <p class="problem-description">Intercambio transaccional</p>
+                    </div>
+                    <div class="problem-box">
+                        <div class="problem-percentage">18%</div>
+                        <h4 class="problem-title">Fragmentación social</h4>
+                        <p class="problem-description">Debilitamiento del tejido comunitario</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="logo-container">
+                <img src="logo_alcaldia_pereira.png" alt="Alcaldía de Pereira" class="logo">
+                <img src="logo_pereira_participa.png" alt="Pereira Participa" class="logo">
+            </div>
+            <div class="slide-counter">7 / 7</div>
+            
+            <div class="slide-header">
+                <h1 class="slide-title">Conclusión Preliminar</h1>
+                <p class="slide-subtitle">Hacia una Participación Ciudadana Transformadora</p>
+            </div>
+            
+            <div class="conclusion-box">
+                <h3 style="margin-bottom: 1.5rem; font-size: 1.3rem;">▲ Hallazgo Central del Proceso</h3>
+                <p>En Pereira, existe una gran oportunidad para <strong>fortalecer la participación ciudadana</strong> y aumentar su <strong>incidencia efectiva</strong> en la gestión pública, garantizando el ejercicio pleno de este derecho fundamental y promoviendo la <strong>emergencia y reconocimiento de nuevos liderazgos</strong> sociales y comunitarios que enriquezcan la democracia local.</p>
+            </div>
+            
+            <div class="content-grid three-columns" style="margin-top: 2rem;">
+                <div class="card">
+                    <div class="card-icon">◯</div>
+                    <h3 class="highlight-text">Transformación Necesaria</h3>
+                    <p>De participación simulada a incidencia real</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">▲</div>
+                    <h3 class="highlight-text">Equidad Territorial</h3>
+                    <p>Inclusión efectiva de todos los sectores</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">●</div>
+                    <h3 class="highlight-text">Nuevos Liderazgos</h3>
+                    <p>Formación y reconocimiento institucional</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 2rem; text-align: center;">
+                <div class="stats-highlight" style="font-size: 1.2rem;">
+                    Próximo paso: Formulación de la Política Pública 2025-2035
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <div class="nav-dot active" onclick="goToSlide(0)"></div>
+        <div class="nav-dot" onclick="goToSlide(1)"></div>
+        <div class="nav-dot" onclick="goToSlide(2)"></div>
+        <div class="nav-dot" onclick="goToSlide(3)"></div>
+        <div class="nav-dot" onclick="goToSlide(4)"></div>
+        <div class="nav-dot" onclick="goToSlide(5)"></div>
+        <div class="nav-dot" onclick="goToSlide(6)"></div> </div>
+
+    <button class="nav-arrow prev" onclick="previousSlide()">‹</button>
+    <button class="nav-arrow next" onclick="nextSlide()">›</button>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.nav-dot');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            
+            currentSlide = (n + totalSlides) % totalSlides;
+            
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+
+            // Actualizar el contador de diapositivas
+            document.querySelector('.slide.active .slide-counter').textContent = `${currentSlide + 1} / ${totalSlides}`;
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function previousSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        function goToSlide(n) {
+            showSlide(n);
+        }
+
+        // Navegación con teclado
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') previousSlide();
+        });
+
+        // Auto-avance opcional (deshabilitado por defecto)
+        // setInterval(nextSlide, 10000);
+
+        // Inicializar animaciones de barras cuando se carga el slide 4
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const bars = entry.target.querySelectorAll('.chart-bar-fill');
+                    bars.forEach(bar => {
+                        bar.style.animation = 'none';
+                        bar.offsetHeight; // Trigger reflow
+                        bar.style.animation = 'fillBar 2s ease-in-out';
+                    });
+                }
+            });
+        });
+
+        document.querySelectorAll('.chart-container').forEach(chart => {
+            observer.observe(chart);
+        });
+
+        // Inicializar el contador de la primera diapositiva al cargar
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.slide.active .slide-counter').textContent = `${currentSlide + 1} / ${totalSlides}`;
+        });
+    </script>
+</body>
+</html>
